@@ -180,10 +180,9 @@ import {
   MenuItems,
 } from "@headlessui/vue";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { ref, computed, onMounted } from "vue";
-import { useStore, mapGetters } from "vuex";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 import { gettersTypes } from "@/modules/types";
-import { setItem } from "@/helpers/persistaneStorage";
 
 const store = useStore();
 const currentNav = ref("home");
@@ -196,14 +195,13 @@ const navigation = [
 
 const isLoggedIn = computed(() => store.getters[gettersTypes.isLoggedIn]);
 const isAnonimus = computed(() => store.getters[gettersTypes.isAnonimus]);
-const user = computed(() => store.getters[gettersTypes.currentuser]);
+// const user = computed(() => store.getters[gettersTypes.currentuser]);
 
 const logOut = (e) => {
   e.preventDefault();
   currentNav.value = "register";
   store.commit("clearData");
   localStorage.removeItem("token");
-  // setItem("token", "");
   window.location.reload();
 };
 </script>
