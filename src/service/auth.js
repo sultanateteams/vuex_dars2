@@ -9,7 +9,7 @@ const AuthService = {
   },
   currentUser(){
     return axios.get('/user')
-  }
+  },
 };
 
 export default AuthService;

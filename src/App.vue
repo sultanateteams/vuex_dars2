@@ -10,8 +10,6 @@ onMounted(() => {
   if (!!token) {
     store.dispatch("getCurrentUser");
   }
-  console.log("store:  ", store);
-  console.log("token:  ", token);
 });
 </script>
 

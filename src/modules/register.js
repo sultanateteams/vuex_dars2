@@ -28,7 +28,6 @@ const getters = {
 
 const mutations = {
   clearData(state) {
-    console.log('clearData')
     state.isLoading = false;
     state.error = null;
     state.nameInput = "";
@@ -72,8 +71,6 @@ const mutations = {
     state.isLoggedIn = true;
     setItem("token", payload.token);
     router.push("home");
-    console.log("home reload");
-    window.location.reload();
   },
   loginFailure(state, payload) {
     state.isLoading = false;
@@ -138,11 +135,9 @@ const actions = {
       context.commit("currentUserStart");
       AuthService.currentUser()
         .then((res) => {
-          console.log(res);
           context.commit("currentUserSuccess", res.data.user);
         })
         .catch((error) => {
-          console.log(error);
           context.commit("currentUserFailure", error);
         });
     });

@@ -195,7 +195,6 @@ const navigation = [
 
 const isLoggedIn = computed(() => store.getters[gettersTypes.isLoggedIn]);
 const isAnonimus = computed(() => store.getters[gettersTypes.isAnonimus]);
-const user = computed(() => store.getters[gettersTypes.currentuser]);
 
 const logOut = (e) => {
   e.preventDefault();
