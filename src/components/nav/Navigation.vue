@@ -23,7 +23,7 @@
               alt="Your Company"
             />
           </div>
-          <div class="hidden sm:ml-6 sm:block">
+          <div v-if="isLoggedIn" class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <RouterLink
                 :to="item.href"
@@ -44,6 +44,7 @@
           </div>
         </div>
         <div
+          v-if="isLoggedIn"
           class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
         >
           <button
@@ -102,28 +103,45 @@
                   >
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <RouterLink
-                    :to="{ name: 'sign-in' }"
+                  <a
+                    @click="logOut"
                     :class="[
                       active ? 'bg-gray-100 outline-hidden' : '',
                       'block px-4 py-2 text-sm text-gray-700 text-decoration-none',
                     ]"
-                    >Sign in</RouterLink
-                  >
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <RouterLink
-                    :to="{ name: 'register' }"
-                    :class="[
-                      active ? 'bg-gray-100 outline-hidden' : '',
-                      'block px-4 py-2 text-sm text-gray-700 text-decoration-none',
-                    ]"
-                    >Register</RouterLink
+                    >Log Out</a
                   >
                 </MenuItem>
               </MenuItems>
             </transition>
           </Menu>
+        </div>
+
+        <div v-if="isAnonimus">
+          <RouterLink
+            :to="{ name: 'sign-in' }"
+            @click="currentNav = 'sign-in'"
+            class="text-white text-decoration-none"
+            :class="[
+              'sign-in' == currentNav
+                ? 'bg-gray-900 text-white'
+                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+              'rounded-md px-3 py-2 text-sm font-medium',
+            ]"
+            >Sign in</RouterLink
+          >
+          <RouterLink
+            :to="{ name: 'register' }"
+            @click="currentNav = 'register'"
+            class="text-white text-decoration-none"
+            :class="[
+              'register' == currentNav
+                ? 'bg-gray-900 text-white'
+                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+              'rounded-md px-3 py-2 text-sm font-medium',
+            ]"
+            >Register</RouterLink
+          >
         </div>
       </div>
     </div>
@@ -162,8 +180,12 @@ import {
   MenuItems,
 } from "@headlessui/vue";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useStore, mapGetters } from "vuex";
+import { gettersTypes } from "@/modules/types";
+import { setItem } from "@/helpers/persistaneStorage";
 
+const store = useStore();
 const currentNav = ref("home");
 
 const navigation = [
@@ -171,4 +193,17 @@ const navigation = [
   { name: "Team", href: "about", current: false },
   { name: "Projects", href: "projects", current: false },
 ];
+
+const isLoggedIn = computed(() => store.getters[gettersTypes.isLoggedIn]);
+const isAnonimus = computed(() => store.getters[gettersTypes.isAnonimus]);
+const user = computed(() => store.getters[gettersTypes.currentuser]);
+
+const logOut = (e) => {
+  e.preventDefault();
+  currentNav.value = "register";
+  store.commit("clearData");
+  localStorage.removeItem("token");
+  // setItem("token", "");
+  window.location.reload();
+};
 </script>

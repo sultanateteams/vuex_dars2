@@ -16,18 +16,29 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form class="space-y-6" @submit="(e) => signIn(e)" method="POST">
         <Input
-          v-model="emailInput.username"
+          v-model="$store.state.register.emailInput"
+          :placeholder="emailInput.placeholder"
+          :errorMessage="
+            Array.isArray($store.state.register.error?.email)
+              ? $store.state.register.error.email[0]
+              : ''
+          "
           :type="emailInput.type"
           :id="emailInput.id"
         />
         <Input
-          v-model="passwordInput.username"
+          v-model="$store.state.register.passwordInput"
+          :placeholder="passwordInput.placeholder"
           :type="passwordInput.type"
           :id="passwordInput.id"
         />
-        <Button :type="submitButton.type" :id="submitButton.id">
+        <Button
+          :type="submitButton.type"
+          :id="submitButton.id"
+          :disabled="$store.state.register.isLoading"
+        >
           Sign in
         </Button>
       </form>
@@ -41,23 +52,36 @@ import Button from "@/components/UI/Button.vue";
 export default {
   components: { Input, Button },
   name: "sign-in",
+  unmounted() {
+    this.$store.state.register.emailInput = "";
+    this.$store.state.register.passwordInput = "";
+  },
   data() {
     return {
       emailInput: {
-        username: "Email address",
+        placeholder: "Email address",
         type: "text",
         id: "email234",
       },
       passwordInput: {
-        username: "Password",
+        placeholder: "Password",
         type: "password",
         id: "passwordl234",
       },
       submitButton: {
-        type: "button",
+        type: "submit",
         id: "buttondl234",
       },
     };
+  },
+  methods: {
+    signIn(e) {
+      e.preventDefault();
+      this.$store.dispatch("userLogin");
+    },
+  },
+  unmounted() {
+    this.$store.commit("clearData");
   },
 };
 </script>

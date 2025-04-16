@@ -1,5 +1,12 @@
 <template>
-  <button :type="type" class="btn w-100" :class="class"><slot></slot></button>
+  <button
+    :type="type"
+    class="btn w-100"
+    :disabled="disabled"
+    :class="[{ disabled: disabled }, classBtn]"
+  >
+    <slot></slot>
+  </button>
 </template>
 
 <script>
@@ -14,11 +21,15 @@ export default {
       type: String,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     username: {
       type: String,
       default: "username",
     },
-    class: {
+    classBtn: {
       type: String,
       default: "btn-outline-primary",
     },
