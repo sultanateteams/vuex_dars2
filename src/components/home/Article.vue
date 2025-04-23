@@ -26,7 +26,13 @@
         </p>
       </div>
       <div class="flex justify-between">
-        <button type="button" class="btn btn-primary px-3">Read more...</button>
+        <button
+          type="button"
+          class="btn btn-primary px-3"
+          @click="goArticleDetail(article)"
+        >
+          Read more...
+        </button>
         <button type="button" class="btn btn-success px-3">Edit</button>
         <button type="button" class="btn btn-danger px-3">Delete</button>
       </div>
@@ -40,6 +46,11 @@ export default {
     article: {
       type: Object,
       required: false,
+    },
+  },
+  methods: {
+    goArticleDetail(props) {
+      this.$router.push(`/article-detail/${props.slug}`);
     },
   },
 };

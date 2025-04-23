@@ -4,6 +4,7 @@ import AboutView from "../views/AboutView.vue";
 import SignIn from "@/views/SignIn.vue";
 import Register from "@/views/Register.vue";
 import ProjectsView from "@/views/ProjectsView.vue";
+import ArticleDetails from "@/views/ArticleDetails.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -35,6 +36,11 @@ const router = createRouter({
       path: "/register",
       name: "register",
       component: Register,
+    },
+    {
+      path: `/article-detail/:slug`,
+      name: "articleDetail",
+      component: ArticleDetails,
     },
   ],
 });
