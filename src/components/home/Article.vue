@@ -25,16 +25,24 @@
           {{ article.description }}
         </p>
       </div>
-      <div class="flex justify-between">
-        <button
-          type="button"
-          class="btn btn-primary px-3"
-          @click="goArticleDetail(article)"
-        >
-          Read more...
-        </button>
-        <button type="button" class="btn btn-success px-3">Edit</button>
-        <button type="button" class="btn btn-danger px-3">Delete</button>
+      <div class="flex">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-primary flex"
+            @click="goArticleDetail(article)"
+          >
+            Read more...
+          </button>
+          <button
+            v-if="isThisOwner"
+            type="button"
+            @click="goArticleEdit(article)"
+            class="btn btn-outline-secondary"
+          >
+            Edit
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -48,9 +56,20 @@ export default {
       required: false,
     },
   },
+  computed: {
+    isThisOwner() {
+      return (
+        this.article?.author.username ==
+        this.$store.state.register.user.username
+      );
+    },
+  },
   methods: {
     goArticleDetail(props) {
       this.$router.push(`/article-detail/${props.slug}`);
+    },
+    goArticleEdit(props) {
+      this.$router.push(`/article-crud/${props.slug}`);
     },
   },
 };

@@ -55,9 +55,11 @@ const actions = {
       ArticleService.getArticleDetail(payload)
         .then((res) => {
           context.commit("articleSuccess", res.data.article);
+          resolve(res.data.article);
         })
         .catch((error) => {
           context.commit("articlesFailure", error.message);
+          reject(error.message);
         });
     });
   },

@@ -5,6 +5,7 @@ import SignIn from "@/views/SignIn.vue";
 import Register from "@/views/Register.vue";
 import ProjectsView from "@/views/ProjectsView.vue";
 import ArticleDetails from "@/views/ArticleDetails.vue";
+import ArticleCrud from "@/components/home/ArticleCrud.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -42,25 +43,12 @@ const router = createRouter({
       name: "articleDetail",
       component: ArticleDetails,
     },
+    {
+      path: `/article-crud/:slug`,
+      name: "articleCrud",
+      component: ArticleCrud,
+    },
   ],
 });
 
 export default router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

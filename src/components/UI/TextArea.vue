@@ -1,20 +1,20 @@
 <template>
   <div class="form-floating mb-3">
-    <input
-      :type="type"
+    <textarea
+      :name="placeholder"
       class="form-control"
       :id="id"
       v-model="inputValue"
-      :autocomplete="type"
       :placeholder="placeholder"
-    />
+      style="height: 200px;"
+    ></textarea>
     <label :for="id">{{ placeholder }}</label>
     <span class="error-message">{{ errorMessage }}</span>
   </div>
 </template>
 <script>
 export default {
-  name: "Input",
+  name: "TextArea",
   props: {
     errorMessage: {
       type: String,
@@ -23,10 +23,6 @@ export default {
     modelValue: {
       type: String,
       required: true,
-    },
-    type: {
-      type: String,
-      default: "text",
     },
     id: {
       type: String,

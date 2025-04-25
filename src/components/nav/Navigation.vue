@@ -191,6 +191,7 @@ const navigation = [
   { name: "Dashboard", href: "home", current: true },
   { name: "Team", href: "about", current: false },
   { name: "Projects", href: "projects", current: false },
+  { name: "Add Article", href: `/article-crud/new-one`, current: false },
 ];
 
 const isLoggedIn = computed(() => store.getters[gettersTypes.isLoggedIn]);

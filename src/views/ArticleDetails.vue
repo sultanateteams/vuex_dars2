@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="flex flex-wrap">
-      <p class="h2 mt-4 mb-2 col-12">
-        {{ article?.title }}
-      </p>
+      <h1 v-if="isThisOwner">delete</h1>
       <div class="col-9">
         <div class="opacity-60">Discription:</div>
         <div>{{ article?.description }}</div>
@@ -59,6 +57,14 @@
             >
               {{ article?.author.following ? "Followed" : "Follow" }}
             </p>
+            <button
+              v-if="isThisOwner"
+              type="button"
+              @click="goArticleEdit(article)"
+              class="btn btn-outline-secondary"
+            >
+              Edit
+            </button>
             <div
               class="flex h-10 w-10 justify-center align-items-center"
               :class="
@@ -92,8 +98,25 @@ export default {
   },
   computed: {
     article() {
-      console.log(this.$store.state.articles.article);
+      console.log("console", this.$store.state.articles.article);
       return this.$store.state.articles?.article;
+    },
+    isThisOwner() {
+      if (this.article?.author.username) {
+        return (
+          this.article?.author.username ==
+          this.$store.state.register.user.username
+        );
+      } else {
+        return false;
+      }
+    },
+  },
+  methods: {
+    goArticleEdit() {
+      this.$router.push(
+        `/article-crud/${this.$store.state.articles.article.slug}`
+      );
     },
   },
 };
