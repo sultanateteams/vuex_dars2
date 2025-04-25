@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import NavView from "./views/NavView.vue";
 import { onMounted } from "vue";
 import { useStore } from "vuex";

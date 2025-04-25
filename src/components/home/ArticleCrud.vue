@@ -47,7 +47,7 @@
         >
         <Button
           v-if="!isNewArticle"
-          @click="save"
+          @click="deleteArticle"
           :classBtn="'btn-danger'"
           type="delete"
           id="svubmitBsutton.id"
@@ -74,18 +74,18 @@ export default {
     isNewArticle() {
       return this.$route.params.slug == "new-one";
     },
-    // isThisOwner() {
-    //   return (
-    //     this.article?.author.username ==
-    //     this.$store.state.register.user.username
-    //   );
-    // },
   },
   mounted() {
     this.getData();
+    this.$store.state.articleCrud.isLoading = false;
   },
+  onUnmounted() {},
   methods: {
     getData() {
+      this.$store.state.articleCrud.title = "";
+      this.$store.state.articleCrud.description = "";
+      this.$store.state.articleCrud.body = "";
+      this.$store.state.articleCrud.article = null;
       if (this.isNewArticle) {
         this.url = "createArticle";
       } else {
@@ -98,6 +98,10 @@ export default {
             this.$store.state.articleCrud.body = result.body;
             this.$store.state.articleCrud.article = result;
             console.log("this.$route.params.slug: ", result);
+          })
+          .catch((error) => {
+            console.log("error: ", error);
+            this.$router.push("/not-found");
           });
       }
     },
@@ -105,6 +109,21 @@ export default {
       this.$store.dispatch(this.url).then((res) => {
         this.$router.push(`/article-detail/${res}`);
       });
+    },
+    deleteArticle() {
+      this.$store
+        .dispatch("deleteArticle")
+        .then((res) => {
+          console.log("deleted: ", res);
+          this.$router.push("/home");
+        })
+        .catch((error) => {
+          this.notFounds();
+          console.log(error);
+        });
+    },
+    notFounds() {
+      console.log("notFounds");
     },
   },
 };

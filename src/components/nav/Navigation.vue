@@ -188,9 +188,9 @@ const store = useStore();
 const currentNav = ref("home");
 
 const navigation = [
-  { name: "Dashboard", href: "home", current: true },
-  { name: "Team", href: "about", current: false },
-  { name: "Projects", href: "projects", current: false },
+  { name: "Dashboard", href: "/home", current: true },
+  { name: "Team", href: "/about", current: false },
+  { name: "Projects", href: "/projects", current: false },
   { name: "Add Article", href: `/article-crud/new-one`, current: false },
 ];
 
@@ -203,5 +203,9 @@ const logOut = (e) => {
   store.commit("clearData");
   localStorage.removeItem("token");
   window.location.reload();
+};
+
+const goPage = (url) => {
+  $router.push(url);
 };
 </script>

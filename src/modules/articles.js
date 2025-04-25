@@ -58,8 +58,8 @@ const actions = {
           resolve(res.data.article);
         })
         .catch((error) => {
-          context.commit("articlesFailure", error.message);
           reject(error.message);
+          // context.commit("articlesFailure", error.message);
         });
     });
   },

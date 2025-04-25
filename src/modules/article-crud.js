@@ -67,6 +67,20 @@ const actions = {
         });
     });
   },
+  deleteArticle(context) {
+    return new Promise((resolve, reject) => {
+      context.commit("articleStart");
+      ArticleService.deleteArticle(context.state.article.slug)
+        .then((res) => {
+          resolve(res);
+          context.commit("articleSuccess", result.data.article);
+        })
+        .catch((error) => {
+          context.commit("articleFailure", error);
+          reject(error);
+        });
+    });
+  },
 };
 
 export default { state, mutations, actions, getters };

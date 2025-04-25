@@ -11,8 +11,10 @@ const ArticleService = {
     return axios.post("/articles", { article });
   },
   editArticle(slug, article) {
-    console.log(`/articles/${slug}`, { article });
     return axios.put(`/articles/${slug}`, { article });
+  },
+  deleteArticle(slug) {
+    return axios.delete(`/articles/${slug}`);
   },
 };
 
